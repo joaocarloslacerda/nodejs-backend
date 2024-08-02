@@ -1,0 +1,21 @@
+{
+  "name": "aula02",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "exemplo"
+  ],
+  "author": "Lacerda, Junior",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "dot-env": "^0.0.1"
+  }
+}

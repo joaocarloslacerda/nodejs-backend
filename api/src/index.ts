@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express';
 
 const app = express();
+app.use(express.static('public'));
 const port = 3030;
 
 app.get('/', (req: Request, res: Response):void => {
@@ -16,23 +17,34 @@ app.get('/soma', (req: Request, res: Response):void => {
 
   //http://localhost:3030/soma?num1=1&num2=1&num3=5
 
+  // let valorUm: number = 4;
+  // let valorDois: number = 3;
+  // let valorTres: number = 1;
+  // let result: number = valorUm + valorDois + valorTres;
 
-  let valorUm: number = 4;
-  let valorDois: number = 3;
-  let valorTres: number = 1;
+  // let {num1, num2, num3} = req.query;
+  // num1 = parseInt(num1);
+  // num2 = parseInt(num2);
+  // num3 = parseInt(num3);
 
-  let result: number = valorUm + valorDois + valorTres;
+  // const result = num1 + num2 + num3;
+
+  let {num1, num2, num3} = req.query as {num1: string, num2: string, num3: string};
+  const result = parseInt(num1, 10) + parseInt(num2, 10) + parseInt(num3, 10);
 
   res.send(`Resultado: ${result}`);
 });
 
 app.get('/departamentos/:id', (req: Request, res: Response):void => {
+
+  console.log(req.params);
+
   res.send('Pong 🏓');
 });
 
 app.get('/clientes', (req: Request, res: Response):void => {
   
-  const html: string = '<h1>Clientes</h1>';
+  const html: string = '<link href="css/estilo.css" rel="stylesheet"><h1>Clientes</h1>';
 
   res.send(html);  
 })

@@ -47,7 +47,23 @@ app.get('/clientes', (req: Request, res: Response):void => {
   const html: string = '<link href="css/estilo.css" rel="stylesheet"><h1>Clientes</h1>';
 
   res.send(html);  
-})
+});
+
+app.get('/funcionarios', (req: Request, res: Response):void => {
+  const funcionario = {
+    nome: 'Cicero',
+    salario: '2000.05'
+  };
+
+  res.json(funcionario);
+});
+
+app.post('/departamentos', (req: Request, res: Response):void => {
+  
+  
+  
+  res.send('POST departamentos');
+});
 
 
 app.listen(port, () => {

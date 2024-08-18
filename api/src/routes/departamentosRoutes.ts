@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { detartamentosResponse,  departamentosRequest} from "../controllers/departamentosControllers";
+import { listaDetartamentos,  insereDepartamentos, deletaDepartamentos} from "../controllers/departamentosControllers";
 
 const router = Router();
 
-router.get('/departamentos',  detartamentosResponse);
+router.get('/departamentos',  listaDetartamentos);
 
-router.post('/departamentos',  departamentosRequest);
+router.post('/departamentos',  insereDepartamentos);
+
+router.delete('/departamentos', deletaDepartamentos);
 
 export default router;

@@ -35,17 +35,37 @@ export const deletaDepartamentos = async (req: Request, res: Response) => {
   const params = new URLSearchParams(queryParams);
   const id_departamento = parseInt(params.get('id'));
 
+  const testeExistencia = await verificaExistencia(id_departamento);
+
   try{
-    const [result] = await conexao.execute(
-      'DELETE FROM DEPARTAMENTOS WHERE id_departamento = (?)',
-      [id_departamento]
-    );
-    res.status(201).json({
-      message: 'Departamento deletado'
-    });
-  }catch (e){
+    if(testeExistencia){
+      const [result] = await conexao.execute(
+        'DELETE FROM DEPARTAMENTOS WHERE id_departamento = (?)',
+        [id_departamento]
+      );
+      res.status(201).json({
+        message: 'Departamento deletado'
+      });
+    }else{
+      res.status(404).json({
+        message: 'Departamento não encontrado!'
+      });
+    }
+  }catch (error){
     res.status(500).json({
       message: 'Erro na deleção'
     });
   }
 };
+
+async function verificaExistencia(id_departamento: number) {
+  const [rows] = await conexao.query(`SELECT * FROM DEPARTAMENTOS WHERE id_departamento = ${id_departamento}`);
+  console.log(rows)
+
+  if(rows != null){
+    return true;
+  }
+  else{
+    return false
+  }
+}

@@ -12,12 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletaDepartamentos = exports.insereDepartamentos = exports.listaDetartamentos = void 0;
+exports.atualizaDepartamento = exports.deletaDepartamentos = exports.insereDepartamentos = exports.listaDetartamentos = void 0;
 const conection_1 = __importDefault(require("../services/conection"));
 const listaDetartamentos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const [rows] = yield conection_1.default.query('SELECT * FROM DEPARTAMENTOS');
     res.json(rows);
-    res.send('GET departamentos');
+    //res.send('GET departamentos');
 });
 exports.listaDetartamentos = listaDetartamentos;
 const insereDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -70,4 +70,30 @@ const deletaDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.deletaDepartamentos = deletaDepartamentos;
+const atualizaDepartamento = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const { nome, sigla } = req.body;
+    try {
+        const [result] = yield conection_1.default.execute('UPDATE DEPARTAMENTOS SET nome = ?, sigla = ? WHERE id_departamento = ?', [nome, sigla, id]);
+        if (result.affectedRows === 0) {
+            res.status(404).json({
+                message: 'Departamento não encontrado',
+                id
+            });
+            return;
+        }
+        res.status(201).json({
+            message: 'Departamento atualizado',
+            id
+        });
+        return;
+    }
+    catch (error) {
+        res.status(500).json({
+            message: "Erro ao atualizar o departamento"
+        });
+        return;
+    }
+});
+exports.atualizaDepartamento = atualizaDepartamento;
 //# sourceMappingURL=departamentosControllers.js.map

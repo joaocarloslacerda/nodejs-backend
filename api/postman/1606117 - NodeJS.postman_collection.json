@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4ca8e9e5-8ad0-43fb-953f-9854882a4464",
-		"name": "1606117 - NodeJS",
+		"_postman_id": "54e0b24f-6a31-4eaf-826d-922285f6b75c",
+		"name": "CURSO NODE",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "617595"
+		"_exporter_id": "37665329"
 	},
 	"item": [
 		{
@@ -29,6 +29,100 @@
 					"port": "3030",
 					"path": [
 						"departamentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT departamentos",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"engenharia\",\r\n    \"sigla\": \"EG\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/departamentos/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"departamentos",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET departamentos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"{{$randomDepartment}}\",\r\n    \"sigla\": \"{{$randomAbbreviation}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/departamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"departamentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE departamentos",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"{{$randomDepartment}}\",\r\n    \"sigla\": \"{{$randomAbbreviation}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/departamentos?id=20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"departamentos"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "20"
+						}
 					]
 				}
 			},

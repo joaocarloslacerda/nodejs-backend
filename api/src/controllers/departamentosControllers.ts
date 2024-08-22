@@ -8,7 +8,7 @@ export const listaDetartamentos = async (req: Request, res: Response) => {
   const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
   res.json(rows);
 
-  res.send('GET departamentos');
+  //res.send('GET departamentos');
 };
 
 export const insereDepartamentos = async (req: Request, res: Response) => {
@@ -71,4 +71,35 @@ export const deletaDepartamentos = async (req: Request, res: Response) => {
   }
 };
 
+export const atualizaDepartamento = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { nome, sigla } = req.body;
+
+  try{
+    const [result] = await conexao.execute<ResultSetHeader>(
+      'UPDATE DEPARTAMENTOS SET nome = ?, sigla = ? WHERE id_departamento = ?',
+      [nome, sigla, id]
+    );
+
+    if(result.affectedRows === 0){
+      res.status(404).json({
+        message: 'Departamento não encontrado',
+        id
+      });
+      return;
+    }
+
+    res.status(201).json({
+      message: 'Departamento atualizado',
+      id
+    });
+    return;
+    
+  } catch (error) {
+    res.status(500).json({
+      message: "Erro ao atualizar o departamento"
+    });
+    return;
+  }
+}
 

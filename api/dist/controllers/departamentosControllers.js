@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletaDepartamentos = exports.insereDepartamentos = exports.listaDetartamentos = void 0;
 const conection_1 = __importDefault(require("../services/conection"));
-const url_1 = require("url");
 const listaDetartamentos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const [rows] = yield conection_1.default.query('SELECT * FROM DEPARTAMENTOS');
     res.json(rows);
@@ -29,7 +28,7 @@ const insereDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, func
             message: 'Departamento criado'
         });
     }
-    catch (e) {
+    catch (error) {
         res.status(500).json({
             message: 'Erro na criação'
         });
@@ -38,40 +37,38 @@ const insereDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, func
 });
 exports.insereDepartamentos = insereDepartamentos;
 const deletaDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const queryParams = req.url.split('?')[1];
-    const params = new url_1.URLSearchParams(queryParams);
-    const id_departamento = parseInt(params.get('id'));
-    const testeExistencia = yield verificaExistencia(id_departamento);
+    const { id } = req.query;
     try {
-        if (testeExistencia) {
-            const [result] = yield conection_1.default.execute('DELETE FROM DEPARTAMENTOS WHERE id_departamento = (?)', [id_departamento]);
-            res.status(201).json({
-                message: 'Departamento deletado'
+        const [result] = yield conection_1.default.execute('DELETE FROM DEPARTAMENTOS WHERE id_departamento = (?)', [id]);
+        if (result.affectedRows === 0) {
+            res.status(404).json({
+                message: 'Departamento não encontrado',
+                id
             });
+            return;
         }
         else {
-            res.status(404).json({
-                message: 'Departamento não encontrado!'
+            res.status(201).json({
+                message: 'Departamento deletado',
+                id
             });
+            return;
         }
     }
     catch (error) {
+        let message = '';
+        switch (error.code) {
+            case 'ER_ROW_IS_REFERENCED_2':
+                message = 'Departamento possui vinculos e não pode ser excluído';
+                break;
+            default:
+                message = 'Erro na exclusão do departamento';
+                break;
+        }
         res.status(500).json({
-            message: 'Erro na deleção'
+            message
         });
     }
 });
 exports.deletaDepartamentos = deletaDepartamentos;
-function verificaExistencia(id_departamento) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const [rows] = yield conection_1.default.query(`SELECT * FROM DEPARTAMENTOS WHERE id_departamento = ${id_departamento}`);
-        console.log(rows);
-        if (rows != null) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    });
-}
 //# sourceMappingURL=departamentosControllers.js.map

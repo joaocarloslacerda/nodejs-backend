@@ -1,6 +1,7 @@
 import { Response, Request } from "express";
 import conexao from "../services/conection";
 import { URLSearchParams } from "url";
+import { ResultSetHeader } from "mysql2";
 
 export const listaDetartamentos = async (req: Request, res: Response) => {
 
@@ -22,7 +23,7 @@ export const insereDepartamentos = async (req: Request, res: Response) => {
     res.status(201).json({
       message: 'Departamento criado'
     });
-  }catch (e) {
+  }catch (error) {
     res.status(500).json({
       message: 'Erro na criação'
     })
@@ -31,41 +32,44 @@ export const insereDepartamentos = async (req: Request, res: Response) => {
 };
 
 export const deletaDepartamentos = async (req: Request, res: Response) => {
-  const queryParams = req.url.split('?')[1];
-  const params = new URLSearchParams(queryParams);
-  const id_departamento = parseInt(params.get('id'));
-
-  const testeExistencia = await verificaExistencia(id_departamento);
+  const { id } = req.query;
 
   try{
-    if(testeExistencia){
-      const [result] = await conexao.execute(
+      const [result] = await conexao.execute<ResultSetHeader>(
         'DELETE FROM DEPARTAMENTOS WHERE id_departamento = (?)',
-        [id_departamento]
+        [id]
       );
-      res.status(201).json({
-        message: 'Departamento deletado'
-      });
-    }else{
-      res.status(404).json({
-        message: 'Departamento não encontrado!'
-      });
-    }
+
+      if(result.affectedRows === 0){
+        res.status(404).json({
+          message: 'Departamento não encontrado',
+          id
+        });
+        return;
+      }else{
+        res.status(201).json({
+          message: 'Departamento deletado',
+          id
+        });
+        return;
+      }
+
   }catch (error){
+    let message = '';
+
+    switch (error.code) {
+      case 'ER_ROW_IS_REFERENCED_2':
+        message = 'Departamento possui vinculos e não pode ser excluído';
+      break;
+      default:
+        message = 'Erro na exclusão do departamento';
+      break;
+    }
+
     res.status(500).json({
-      message: 'Erro na deleção'
+      message
     });
   }
 };
 
-async function verificaExistencia(id_departamento: number) {
-  const [rows] = await conexao.query(`SELECT * FROM DEPARTAMENTOS WHERE id_departamento = ${id_departamento}`);
-  console.log(rows)
 
-  if(rows != null){
-    return true;
-  }
-  else{
-    return false
-  }
-}

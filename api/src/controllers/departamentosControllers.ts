@@ -28,7 +28,6 @@ export const insereDepartamentos = async (req: Request, res: Response) => {
       message: 'Erro na criação'
     })
   }
-  console.log(req.body);
 };
 
 export const deletaDepartamentos = async (req: Request, res: Response) => {
@@ -36,7 +35,7 @@ export const deletaDepartamentos = async (req: Request, res: Response) => {
 
   try{
       const [result] = await conexao.execute<ResultSetHeader>(
-        'DELETE FROM DEPARTAMENTOS WHERE id_departamento = (?)',
+        'DELETE FROM DEPARTAMENTOS WHERE id_departamento = ?',
         [id]
       );
 

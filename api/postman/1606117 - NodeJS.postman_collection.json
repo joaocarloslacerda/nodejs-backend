@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "4ca8e9e5-8ad0-43fb-953f-9854882a4464",
+		"name": "1606117 - NodeJS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "617595"
+	},
+	"item": [
+		{
+			"name": "POST departamentos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"{{$randomDepartment}}\",\r\n    \"sigla\": \"{{$randomAbbreviation}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/departamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"departamentos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

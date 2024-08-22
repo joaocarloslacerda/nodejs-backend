@@ -33,13 +33,12 @@ const insereDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, func
             message: 'Erro na criação'
         });
     }
-    console.log(req.body);
 });
 exports.insereDepartamentos = insereDepartamentos;
 const deletaDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.query;
     try {
-        const [result] = yield conection_1.default.execute('DELETE FROM DEPARTAMENTOS WHERE id_departamento = (?)', [id]);
+        const [result] = yield conection_1.default.execute('DELETE FROM DEPARTAMENTOS WHERE id_departamento = ?', [id]);
         if (result.affectedRows === 0) {
             res.status(404).json({
                 message: 'Departamento não encontrado',

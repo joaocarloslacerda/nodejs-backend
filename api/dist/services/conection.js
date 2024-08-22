@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const promise_1 = __importDefault(require("mysql2/promise"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+//para que a conexão funcione , precisamos de um arquivo chamado ".end" que contenha os dados de conexão no banco
+//EX.:
+//DB_HOST="localhost"
 const conexao = promise_1.default.createPool({
     connectionLimit: 10,
     host: process.env.DB_HOST,

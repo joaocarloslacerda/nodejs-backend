@@ -2,6 +2,9 @@ import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 dotenv.config();
 
+//para que a conexão funcione , precisamos de um arquivo chamado ".end" que contenha os dados de conexão no banco
+//EX.:
+//DB_HOST="localhost"
 const conexao = mysql.createPool({
   connectionLimit: 10,
   host: process.env.DB_HOST,

@@ -10,9 +10,8 @@ import validaDepartamento from "../middlewares/validaDepartamento";
 const router = Router();
 
 router.get('/departamentos', listaDetartamentos);
-
+router.get('/departamentos/:id', listaDetartamentos);
 router.post('/departamentos', validaDepartamento, insereDepartamentos);
-
 router.delete('/departamentos', deletaDepartamentos);
 router.put('/departamentos/:id', validaDepartamento, atualizaDepartamento);
 

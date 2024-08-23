@@ -15,9 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.atualizaDepartamento = exports.deletaDepartamentos = exports.insereDepartamentos = exports.listaDetartamentos = void 0;
 const conection_1 = __importDefault(require("../services/conection"));
 const listaDetartamentos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (id) {
+        const [rows] = yield conection_1.default.execute('SELECT * FROM DEPARTAMENTOS WHERE id_departamento = ?', [id]);
+        res.json(rows);
+        return;
+    }
+    // }else{
+    //   const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
+    //   res.json(rows);
+    // }
     const [rows] = yield conection_1.default.query('SELECT * FROM DEPARTAMENTOS');
     res.json(rows);
-    //res.send('GET departamentos');
+    // const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
+    // res.json(rows);
 });
 exports.listaDetartamentos = listaDetartamentos;
 const insereDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

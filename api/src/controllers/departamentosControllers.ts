@@ -4,11 +4,25 @@ import { URLSearchParams } from "url";
 import { ResultSetHeader } from "mysql2";
 
 export const listaDetartamentos = async (req: Request, res: Response) => {
+  const { id } = req.params;
 
+  if(id){
+    const [rows] = await conexao.execute('SELECT * FROM DEPARTAMENTOS WHERE id_departamento = ?',
+      [id]
+    );
+    res.json(rows);
+    return;
+  }
+  // }else{
+  //   const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
+  //   res.json(rows);
+  // }
   const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
-  res.json(rows);
+    res.json(rows);
 
-  //res.send('GET departamentos');
+  // const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
+  // res.json(rows);
+
 };
 
 export const insereDepartamentos = async (req: Request, res: Response) => {

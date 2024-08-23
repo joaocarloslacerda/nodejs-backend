@@ -8,6 +8,7 @@ const departamentosControllers_1 = require("../controllers/departamentosControll
 const validaDepartamento_1 = __importDefault(require("../middlewares/validaDepartamento"));
 const router = (0, express_1.Router)();
 router.get('/departamentos', departamentosControllers_1.listaDetartamentos);
+router.get('/departamentos/:id', departamentosControllers_1.listaDetartamentos);
 router.post('/departamentos', validaDepartamento_1.default, departamentosControllers_1.insereDepartamentos);
 router.delete('/departamentos', departamentosControllers_1.deletaDepartamentos);
 router.put('/departamentos/:id', validaDepartamento_1.default, departamentosControllers_1.atualizaDepartamento);

@@ -95,6 +95,38 @@
 			"response": []
 		},
 		{
+			"name": "GET departamentos Pelo ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"{{$randomDepartment}}\",\r\n    \"sigla\": \"{{$randomAbbreviation}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/departamentos/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"departamentos",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "DELETE departamentos",
 			"request": {
 				"method": "DELETE",

@@ -13,16 +13,8 @@ export const listaDetartamentos = async (req: Request, res: Response) => {
     res.json(rows);
     return;
   }
-  // }else{
-  //   const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
-  //   res.json(rows);
-  // }
   const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
     res.json(rows);
-
-  // const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
-  // res.json(rows);
-
 };
 
 export const insereDepartamentos = async (req: Request, res: Response) => {

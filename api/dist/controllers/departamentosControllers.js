@@ -21,14 +21,8 @@ const listaDetartamentos = (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.json(rows);
         return;
     }
-    // }else{
-    //   const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
-    //   res.json(rows);
-    // }
     const [rows] = yield conection_1.default.query('SELECT * FROM DEPARTAMENTOS');
     res.json(rows);
-    // const [rows] = await conexao.query('SELECT * FROM DEPARTAMENTOS');
-    // res.json(rows);
 });
 exports.listaDetartamentos = listaDetartamentos;
 const insereDepartamentos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
